@@ -1,0 +1,26 @@
+<div style="padding-top: 230px;">
+  <mat-card class="example-card">
+    <mat-card-header style="align-items: center">
+      <mat-card-title class="card-title">Efetuar Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="mat-container">
+      <form [formGroup]="loginForm">
+        <div class="example-container">
+          <mat-form-field style="margin-bottom: 10px;">
+            <input  matInput placeholder="Entre com seu e-mail" formControlName="email" required>
+            <mat-error *ngIf="loginForm.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Entre com sua senha" formControlName="password" [type]="hide ? 'password' : 'text'" required>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Senha é obrigatório</mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+    </mat-card-content>
+    <mat-card-actions style="text-align: center;">
+      <button mat-raised-button (click)="validLogin()" class="button-login" color="primary">Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

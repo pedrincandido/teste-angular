@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$ProvaTecnica-primary: mat-palette($mat-grey, 800, 900, 500);
+$ProvaTecnica-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+$ProvaTecnica-warn: mat-palette($mat-red);
+
+$ProvaTecnica-theme: mat-light-theme($ProvaTecnica-primary, $ProvaTecnica-accent, $ProvaTecnica-warn);
+
+@include angular-material-theme($ProvaTecnica-theme);
+
+@import "mixins/material-pallete";
+@import "loader/loader-carregamento.scss";
+@import "loader/loader-theme.scss"

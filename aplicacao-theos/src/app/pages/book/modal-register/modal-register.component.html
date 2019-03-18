@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Registrar Livro</h1>
+<div mat-dialog-content>
+  <form [formGroup]="bookForm">
+    <mat-form-field>
+      <input matInput placeholder="Título" formControlName="title">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Editora" formControlName="publishingCompany">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Páginas" formControlName="pages">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Edição" formControlName="edition">
+    </mat-form-field>
+    <div>
+      <button type="button" class="button-register" color="primary" (click)="addPerson()">
+        <mat-icon matListIcon>add</mat-icon>
+      </button>
+    </div>
+    <div formArrayName="persons">
+      <div *ngFor="let person of bookForm.controls.persons.controls; let i=index" class="panel panel-default">
+        <div class="panel-body" [formGroupName]="i">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Selecione um Autor" [matAutocomplete]="auto" formControlName="person">
+            <!-- <mat-error
+              *ngIf="produtoForm.controls['familia'].hasError('required') && produtoForm.controls['familia'].touched || showMsgError">
+              {{getMsgError()}}
+            </mat-error> -->
+          </mat-form-field>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let p of personList" [value]="f">
+                <span>{{ p.name }}</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+          <mat-icon class="ajust-delete" matListIcon (click)="removePerson(i)">delete</mat-icon>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Fechar</button>
+  <button mat-button [disabled]="!bookForm.valid" (click)="validForm()">Salvar</button>
+</div>

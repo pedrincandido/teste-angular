@@ -1,84 +1,27 @@
-## Programador Frontend (Angular)
+# ProvaTecnica
 
-# Instruções
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
 
-    Esse teste é público. Todos os interessados que fizerem pull request receberão um feedback da equipe 
-    Theòs Sistemas
-    
-    1. Faça um fork deste repositório;
-    2. Crie uma branch com o seu nome.
-    2. Adicione seu currículo na raiz do repositório.
-    3. Envie-nos o PULL-REQUEST para que seja avaliado.
-    
-### O Teste
+## Development server
 
-O teste consiste em implementar um formulário em angular para cadastro de profissão que irá se comunicar com uma API.
-Os campos que compõe esse formulário são:
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-	Nome
-	Sobrenome
-	Email
-	Sexo
-	Data (Data do cadastro)
-	Cidade
-	Estado
-	Área de formação
-	Profissão
+## Code scaffolding
 
-O desenvolvimento precisa contemplar as 4 operações de CRUD, ou seja, inserir, selecionar, alterar e excluir um registro. Sendo assim, 
-os botões que precisamos nesse formulário são:
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-	Novo
-	Alterar
-	Excluir
-	Buscar
-	Salvar
+## Build
 
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-### Algumas regras do formulário
+## Running unit tests
 
-* Campos Sexo, Estado, Cidade e Profissão devem ser um Select com as opções para escolha.
-* De acordo com a escolha no campo Estado, alterne entre listas diferentes de cidade. (min 2 estados)
-* Campos Nome, Sobrenome, Email, Área de Formação, Data e Profissão são obrigatórios
-* Garantir que o campo E-mail receba apenas emails válidos.
-* Ao editar, salvar ou excluir um registro, atualizar a lista de registros para que na tela de busca, os dados estejam atualizados conforme a ação tomada na tela anterior.
-* Ao selecionar BUSCAR, o usuário terá acesso a uma tela de busca, onde poderá realizar suas buscas por PROFISSÃO ou NOME COMPLETO. Após realizar a busca, deverá ser possível selecionar um registro na lista, e devolve-lo para o formulario caso o usuário precise editar algum dos dados.
-	
-		Obs: Os dados do registro selecionado na tela de busca, deverá ficar em estado de "VISUALIZAÇÃO" até o 
-		momento em que o usuário clicar em alterar. Só assim, ele poderá editar e salvar as alterações.
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Running end-to-end tests
 
-### Esperamos que:
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-* Utilize as boas praticas do html 5 e que seja fiel a ele.
-* Siga todas as regras descritas a cima.
-* Usando  o GULP ou GRUNT, minifique seu HTML, CSS e JS (obs: faça commit também dos arquivos não minificados)
-* Valide os campos do formulário
-* Certifique-se que a aplicação esteja rodando antes de nos enviar o pull-request
+## Further help
 
-
-### Você pode:
-
-* Utilizar qualquer framework CSS (Bootstrap, Material ...)
-* Utilizar componentes do Bower ou NPM
-
-
-### Ganhe pontos
-
-* Deixando a aplicação responsiva.
-* Utilizando SASS ou LESS.
-* Utilizando interfaces (Typescript)
-* Considerando que essa aplicação pode evoluir, crie um "base-component" para que possa ser herdado com seus métodos padrões.
-* Adicionando um "loader" em cada interação para avisar o usuário que os dados estão sendo carregados ou atualizados.
-* Utilize modal para a tela de BUSCA.
-
-
-### Nos surpreenda
-
-* Ao invés de consumir um arquivo .json local para manipulação dos dados, implemente uma API HTTP REST simples, em NodeJS e disponibilize os mesmos dados para consulta, porém via API.
-
-
-### Algumas observações:
-
-    1. Armazene seus arquivos .json dentro da pasta JSON criado dentro do projeto.
-    2. A versão do Angular instalado é: 6.0.2
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

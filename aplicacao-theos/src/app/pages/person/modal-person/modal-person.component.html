@@ -1,0 +1,86 @@
+<h1 mat-dialog-title>Registrar Livro</h1>
+<div mat-dialog-content>
+  <form [formGroup]="personForm" *ngIf="!showAddress">
+    <mat-form-field>
+      <input matInput placeholder="Nome" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Data de Nascimento" formControlName="birthDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="CPF" formControlName="cpf" mask="000.000.000-00">
+    </mat-form-field>
+    <mat-form-field style="width: 45%;">
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" placeholder="Selecione o gênero" aria-label="Number" matInput formControlName="gender"
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+  <form [formGroup]="addressForm" *ngIf="showAddress">
+    <mat-form-field>
+      <input matInput placeholder="CEP" formControlName="cep" required mask="00000-000">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Rua" formControlName="street" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Número" formControlName="number" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Bairro" formControlName="neighborhood" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Selecione um Estado" [matAutocomplete]="auto" formControlName='state' required>
+      <!-- <mat-error
+        *ngIf="produtoForm.controls['familia'].hasError('required') && produtoForm.controls['familia'].touched || showMsgError">
+        {{getMsgError()}}
+      </mat-error> -->
+    </mat-form-field>
+
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayState"
+      (optionSelected)="optionChange($event.option.value)">
+      <mat-option *ngIf="isLoading" class="is-loading">
+        <mat-spinner diameter="50"></mat-spinner>
+      </mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option *ngFor="let f of filteredState" [value]="f">
+          <span>{{ f.name }}</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+
+    <mat-form-field>
+      <input type="text" placeholder="Selecione uma cidade" aria-label="Number" matInput formControlName="city"
+        [matAutocomplete]="autoCity" required>
+      <mat-autocomplete #autoCity="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredCityOptions | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Complemento" formControlName="complement">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" *ngIf="!showAddress">Fechar</button>
+  <button mat-button (click)="returnForm()" *ngIf="showAddress">Voltar</button>
+  <button mat-button [disabled]="!personForm.valid" (click)="continueForm()" *ngIf="!showAddress"
+    style="margin-left: 60%;">Continuar</button>
+  <button mat-button [disabled]="!addressForm.valid" (click)="salvarForm()" *ngIf="showAddress"
+    style="margin-left: 60%;">Salvar</button>
+</div>

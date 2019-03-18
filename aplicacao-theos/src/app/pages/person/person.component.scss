@@ -1,0 +1,52 @@
+table {
+    width: 600px;
+    // margin-left: 36%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+
+  .mat-row:hover {
+    background-color: #EEEEEE;
+  }
+
+  .mat-header-cell {
+    text-align: center;
+  }
+
+  td {
+    text-align: center;
+  }
+
+.button-person {
+    mat-icon {
+       color: white;
+    }
+    float: right;
+    background-color: #424242;
+    border-color: #424242;
+    margin-top: -47px;
+    margin-right: 21px;
+ }
+
+ .button-person:hover {
+    mat-icon {
+        color: #424242;
+    }
+    background-color: white;
+    color: 424242;
+    cursor: pointer;
+  }
+
+ h2 {
+    text-align: center;
+  }
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

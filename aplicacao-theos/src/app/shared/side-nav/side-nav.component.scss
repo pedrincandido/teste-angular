@@ -1,0 +1,77 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .is-mobile .toolbar {
+    position: fixed;
+    /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+    z-index: 2;
+    color: white!important;
+  }
+  .toolbar {
+    color: white!important;
+  }
+
+  h1.app-name {
+    margin-left: 8px;
+  }
+
+  .form-field {
+    width: 100%;
+  }
+  
+  .sidenav-container {
+    flex: 1;
+  }
+  
+  .is-mobile .sidenav-container {
+    flex: 1 0 auto;
+  }
+  
+
+.ajust-img {
+    width: 105px;
+    margin: 0;
+  }
+
+.button-dialog {
+  background: #424242!important;
+  float: right;
+  width: 100%;
+  color: white;
+}
+
+.button-dialog:hover {
+  background: transparent!important;
+  color: #424242;
+}
+
+.widget-icon {
+    width: 27px;
+    height: 29px;
+    line-height: 30px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.button5 {border-radius: 100%;}
+
+.button {
+    background-color: #eeeeee;
+    border: none;
+    color: #424242;
+    padding: 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px;
+    /* margin: -8px 2px; */
+    margin-left: 95%;
+    /* float: right; */
+  }

@@ -1,0 +1,10 @@
+<mat-card class="layout-cards">
+  <mat-card-header>
+    <mat-card-title>{{cardTitle}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image [src]="cardImagePath" alt="{{cardAlt}}" class="card-img">
+  <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button>EXCLUIR</button>
+    <button mat-button>EDITAR</button>
+  </mat-card-actions>
+</mat-card>

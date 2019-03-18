@@ -1,0 +1,32 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+body { 
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+ }
+
+
+ .button-register {
+    mat-icon {
+       color: white;
+    }
+   float: right;
+   margin: 25px;
+   background-color: #424242;
+   border-color: #424242;
+ }
+
+ .button-register:hover {
+   mat-icon {
+       color: #424242;
+   }
+   background-color: white;
+   color: 424242;
+   cursor: pointer;
+ }

@@ -1,0 +1,10 @@
+<div class="container">
+  <button class="button-register" color="primary" (click)="openDialog()">
+    <mat-icon matListIcon>add</mat-icon>
+  </button>
+  <div class="cards">
+    <div *ngFor="let b of books" fxFlex="30" fxFlex.md="33" fxFlex.sm="50" fxFlex.xs="100" style="padding: 5px;">
+      <app-book class="card" [book]="b"></app-book>
+    </div>
+  </div>
+</div>
