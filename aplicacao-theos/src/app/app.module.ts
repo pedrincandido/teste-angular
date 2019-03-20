@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { BroadcasterService } from './shared/services/broadcaster.service';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -27,6 +28,7 @@ registerLocaleData(localePt);
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
+    BroadcasterService
   ],
   bootstrap: [AppComponent]
 })

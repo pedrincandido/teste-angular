@@ -1,4 +1,5 @@
 export class AddressViewModel {
+    id: number;
     street: string;
     number: number;
     neighborhood: string;
@@ -7,8 +8,8 @@ export class AddressViewModel {
     personId: number;
     cityId: number;
 
-
     constructor(a) {
+        this.id = a.id ? a.id : null;
         this.street = a.street ? a.street : null;
         this.number = a.number ? a.number : null;
         this.neighborhood = a.neighborhood ? a.neighborhood : null;

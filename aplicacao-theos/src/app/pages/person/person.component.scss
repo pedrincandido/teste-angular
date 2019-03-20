@@ -1,7 +1,7 @@
 table {
-    width: 600px;
+    width: 800px;
     // margin-left: 36%;
-  }
+}
   
   .mat-form-field {
     font-size: 14px;
@@ -49,4 +49,12 @@ table {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.button-editar {
+  color: #09bbffcc;
+}
+
+.button-delete {
+  color: red;
 }

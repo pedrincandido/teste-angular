@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { map, finalize } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { ModalPersonComponent } from './modal-person/modal-person.component';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
+import { PersonViewModel } from 'src/app/shared/viewModel/person.view-model';
 
 @Component({
   selector: 'app-person',
@@ -14,7 +16,7 @@ import { ModalPersonComponent } from './modal-person/modal-person.component';
 export class PersonComponent implements OnInit {
   dataSource = new PersonDataSource(this.personService);
 
-  displayedColumns: string[] = ['name', 'dataNascimento', 'cpf', 'email', 'gender'];
+  displayedColumns: string[] = ['name', 'dataNascimento', 'cpf', 'email', 'gender', 'actions', 'actions2'];
   constructor(
     public dialog: MatDialog,
     private personService: PersonService,
@@ -23,14 +25,36 @@ export class PersonComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialog(): void {
+  openDialog(data: PersonViewModel): void {
     const dialogRef = this.dialog.open(ModalPersonComponent, {
       width: '500px',
+      data: { data }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.dataSource = new PersonDataSource(this.personService);
       }
+    });
+  }
+
+
+  openDialogDelete(data): void {
+    const dialogRef = this.dialog.open(ModalDeleteComponent, {
+      width: '250px',
+      data: { name: data.name, title: 'Excluir Pessoa' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.detelePerson(data.id);
+      }
+    });
+  }
+
+  detelePerson(personId: number) {
+    this.personService.deletePerson(personId).subscribe(result => {
+      this.dataSource = new PersonDataSource(this.personService);
     });
   }
 

@@ -12,10 +12,10 @@ export class PersonService {
     private http: HttpClient
   ) { }
 
-  getByName(term, i) {
+  getByName(term) {
     let params = new HttpParams();
-    if (term[i].person) {
-      params = params.append('name', term[i].person);
+    if (term) {
+      params = params.append('name', term);
     } else {
       return of([]);
     }
@@ -29,5 +29,13 @@ export class PersonService {
 
   savePerson(data: PersonViewModel) {
     return this.http.post('api/person', data);
+  }
+
+  deletePerson(personId: number) {
+    return this.http.delete(`api/person/${personId}`);
+  }
+
+  editPerson(data: PersonViewModel) {
+    return this.http.put(`api/person`, data);
   }
 }

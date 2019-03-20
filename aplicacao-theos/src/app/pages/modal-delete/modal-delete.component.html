@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content class="mat-dialog">
+  Você tem certeza que deseja excluir {{data.name}}?
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="fechar()">Fechar</button>
+  <button mat-button (click)="onNoClick()" class="button-save">Salvar</button>
+</div>

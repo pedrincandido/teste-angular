@@ -3,30 +3,63 @@
   <form [formGroup]="bookForm">
     <mat-form-field>
       <input matInput placeholder="Título" formControlName="title">
+      <mat-error *ngIf="bookForm.controls['title'].hasError('required') && bookForm.controls['title'].touched">
+        Título é obrigatório
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Editora" formControlName="publishingCompany">
+      <mat-error
+        *ngIf="bookForm.controls['publishingCompany'].hasError('required') && bookForm.controls['publishingCompany'].touched">
+        Editora é obrigatório
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Páginas" formControlName="pages">
+      <mat-error *ngIf="bookForm.controls['pages'].hasError('required') && bookForm.controls['pages'].touched">
+        Paginas é obrigatório
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Edição" formControlName="edition">
+      <mat-error *ngIf="bookForm.controls['edition'].hasError('required') && bookForm.controls['edition'].touched">
+        Edição é obrigatório
+      </mat-error>
     </mat-form-field>
-    <div>
-      <button type="button" class="button-register" color="primary" (click)="addPerson()">
-        <mat-icon matListIcon>add</mat-icon>
-      </button>
-    </div>
-    <div formArrayName="persons">
+    <!-- <div> -->
+    <!-- <button type="button" class="button-register" color="primary" (click)="addPerson()"> -->
+    <!-- <mat-icon matListIcon>add</mat-icon> -->
+    <!-- </button> -->
+    <!-- </div> -->
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Selecione um Autor" [matAutocomplete]="auto" formControlName="person">
+      <mat-error *ngIf="bookForm.controls['person'].hasError('required') && bookForm.controls['person'].touched">
+        Autor é obrigatório
+      </mat-error>
+    </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngIf="isLoading" class="is-loading">
+        <mat-spinner diameter="50"></mat-spinner>
+      </mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option *ngFor="let p of personList" [value]="p">
+          <span>{{ p.name }}</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+
+    <mat-form-field>
+      <input matInput placeholder="Ano da Publicação" formControlName="yearPublication">
+      <mat-error *ngIf="bookForm.controls['yearPublication'].hasError('required') && bookForm.controls['yearPublication'].touched">
+        Ano da publicação é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <!-- <div formArrayName="persons">
       <div *ngFor="let person of bookForm.controls.persons.controls; let i=index" class="panel panel-default">
         <div class="panel-body" [formGroupName]="i">
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Selecione um Autor" [matAutocomplete]="auto" formControlName="person">
-            <!-- <mat-error
-              *ngIf="produtoForm.controls['familia'].hasError('required') && produtoForm.controls['familia'].touched || showMsgError">
-              {{getMsgError()}}
-            </mat-error> -->
           </mat-form-field>
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngIf="isLoading" class="is-loading">
@@ -41,7 +74,7 @@
           <mat-icon class="ajust-delete" matListIcon (click)="removePerson(i)">delete</mat-icon>
         </div>
       </div>
-    </div>
+    </div> -->
   </form>
 </div>
 <div mat-dialog-actions>

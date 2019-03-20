@@ -13,8 +13,8 @@ import { BookViewModel } from 'src/app/shared/viewModel/book.view-model';
 export class ModalRegisterComponent implements OnInit {
   bookForm: FormGroup;
   isLoading = false;
-  person: any;
-  listPersons: any;
+  personList: any;
+  bookData: BookViewModel;
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ModalRegisterComponent>,
@@ -25,20 +25,43 @@ export class ModalRegisterComponent implements OnInit {
   ngOnInit(): void {
     this.buildForm();
 
-    this.bookForm.controls.persons
+    // this.bookForm.get('persons').valueChanges.subscribe((x) => {
+    //   debugger
+    //   console.log(x);
+    // });
+    // this.bookForm.controls.persons
+    //   .valueChanges
+    //   .pipe(
+    //     debounceTime(300),
+    //     distinctUntilChanged(),
+    //     tap(() => this.isLoading = true),
+    //     switchMap((value) => this.personService.getByName(value)
+    //       .pipe(
+    //         finalize(() => this.isLoading = false),
+    //       )
+    //     ))
+    //   .subscribe((result: any) => {
+    //     this.person = result;
+    //   });
+
+    this.bookForm
+      .get('person')
       .valueChanges
       .pipe(
         debounceTime(300),
-        distinctUntilChanged(),
         tap(() => this.isLoading = true),
-        switchMap((value, index) => this.personService.getByName(value, index)
+        switchMap(value => this.personService.getByName(value)
           .pipe(
             finalize(() => this.isLoading = false),
           )
         ))
       .subscribe((result: any) => {
-        this.person = result;
+        this.personList = result;
       });
+
+    if (this.data.book) {
+      this.initValues(this.data.book);
+    }
   }
 
   buildForm(): void {
@@ -47,7 +70,9 @@ export class ModalRegisterComponent implements OnInit {
       pages: new FormControl('', Validators.required),
       edition: new FormControl('', Validators.required),
       publishingCompany: new FormControl('', Validators.required),
-      persons: this.formBuilder.array([this.initPerson()])
+      // persons: this.formBuilder.array([this.initPerson()])
+      person: new FormControl('', Validators.required),
+      yearPublication: new FormControl('', Validators.required)
     });
   }
 
@@ -55,6 +80,15 @@ export class ModalRegisterComponent implements OnInit {
     return this.formBuilder.group({
       person: ['', Validators.required]
     });
+  }
+
+  initValues(book: BookViewModel) {
+    this.bookForm.get('title').setValue(book.title);
+    this.bookForm.get('pages').setValue(book.pages);
+    this.bookForm.get('edition').setValue(book.edition);
+    this.bookForm.get('publishingCompany').setValue(book.publishingCompany);
+    this.bookForm.get('person').setValue(book.person);
+    this.bookForm.get('yearPublication').setValue(book.publishingCompany);
   }
 
   addPerson() {
@@ -71,33 +105,38 @@ export class ModalRegisterComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  validParsePersons() {
-    this.listPersons = [];
-    const dataPerson = this.bookForm.controls.sales.value;
-    if (dataPerson.length >= 1) {
-      for (const element of dataPerson) {
-        const item = new PersonViewModel({
-          id: element.id,
-        });
-        this.listPersons.push(item);
-      }
-    }
-  }
+  // validParsePersons() {
+  //   this.listPersons = [];
+  //   const dataPerson = this.bookForm.controls.sales.value;
+  //   if (dataPerson.length >= 1) {
+  //     for (const element of dataPerson) {
+  //       const item = new PersonViewModel({
+  //         id: element.id,
+  //       });
+  //       this.listPersons.push(item);
+  //     }
+  //   }
+  // }
 
 
   validForm() {
-    const book: BookViewModel = new BookViewModel(this.bookForm.value);
-    book.person = this.listPersons;
-    // if (!this.listPersons.length) {
-    //   this.bookForm.get('')
-    // }
-    this.dialogRef.close(book);
+    this.bookData = new BookViewModel(this.bookForm.value);
+    const person = this.bookForm.get('person').value;
+    if (person && person.id) {
+      this.bookData.personId = person.id;
+      this.saveForm();
+    } else {
+      this.bookForm.get('person').setValidators([Validators.required]);
+      this.bookForm.get('person').updateValueAndValidity();
+    }
+  }
+
+  saveForm() {
+    this.dialogRef.close(this.bookData);
   }
 
   displayFn(result) {
-    if (result) {
-      return result.DESCRGRUPOPROD;
-    }
+    return result.name;
   }
 
 }

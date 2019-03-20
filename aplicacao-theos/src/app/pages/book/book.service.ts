@@ -20,4 +20,12 @@ export class BookService {
     data.url = '../../../assets/books/edipo-rei.jpg';
     return this.http.post<BookViewModel>('api/book', data);
   }
+
+  deleteBook(bookId: number) {
+    return this.http.delete<BookViewModel>(`api/book/${bookId}`);
+  }
+
+  editBook(data: BookViewModel) {
+    return this.http.put<BookViewModel>(`api/book`, data);
+  }
 }

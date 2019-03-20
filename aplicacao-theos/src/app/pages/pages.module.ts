@@ -10,6 +10,7 @@ import { ModalRegisterComponent } from './book/modal-register/modal-register.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalPersonComponent } from './person/modal-person/modal-person.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { ModalDeleteComponent } from './modal-delete/modal-delete.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { NgxMaskModule } from 'ngx-mask';
     BookComponent,
     ListBookComponent,
     ModalRegisterComponent,
-    ModalPersonComponent
+    ModalPersonComponent,
+    ModalDeleteComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { NgxMaskModule } from 'ngx-mask';
   ],
   entryComponents: [
     ModalRegisterComponent,
-    ModalPersonComponent
+    ModalPersonComponent,
+    ModalDeleteComponent
   ]
 })
 export class PagesModule { }

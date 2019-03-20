@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
@@ -23,7 +23,7 @@ export class ModalPersonComponent implements OnInit {
   options: string[] = ['Masculino', 'Feminino'];
   filteredOptions: Observable<string[]>;
   showAddress = false;
-  personData: PersonViewModel;
+  personData: PersonViewModel = new PersonViewModel({});
   addressData: AddressViewModel;
   selectState: StateViewModel;
   selectCity: CityViewModel;
@@ -32,6 +32,10 @@ export class ModalPersonComponent implements OnInit {
   filteredCity: Array<CityViewModel> = [];
   filteredCityOptions: Observable<CityViewModel[]>;
   continue = false;
+  isPost = true;
+  personId: number;
+  addressId: number;
+  title = 'Registrar Pessoa';
   constructor(
     private formBuilder: FormBuilder,
     private personService: PersonService,
@@ -39,6 +43,7 @@ export class ModalPersonComponent implements OnInit {
     private stateService: StateService,
     private cityService: CityService,
     public dialogRef: MatDialogRef<ModalPersonComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
@@ -49,6 +54,12 @@ export class ModalPersonComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
+    if (this.data.data) {
+      this.title = 'Editar Pessoa';
+      this.loadPersonData(this.data.data);
+      this.isPost = false;
+      this.personId = this.data.data.id;
+    }
 
   }
 
@@ -56,6 +67,15 @@ export class ModalPersonComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  private loadPersonData(data: PersonViewModel) {
+    this.personForm.get('name').setValue(data.name);
+    this.personForm.get('cpf').setValue(data.cpf);
+    this.personForm.get('email').setValue(data.email);
+    this.personForm.get('birthDate').setValue(data.birthDate);
+    this.personForm.get('gender').setValue(data.genderId === 1 ? 'Masculino' : 'Feminino');
+
   }
 
   private _filterCity(value): CityViewModel[] {
@@ -121,6 +141,7 @@ export class ModalPersonComponent implements OnInit {
         );
     }
     this.continue = true;
+    this.getAddressByPersonId();
   }
 
   returnForm(): void {
@@ -130,18 +151,57 @@ export class ModalPersonComponent implements OnInit {
   savePerson(): void {
     this.personData = new PersonViewModel(this.personForm.value);
     this.personData.genderId = this.personForm.get('gender').value === 'Masculino' ? 1 : 2;
-    this.personService.savePerson(this.personData).subscribe(result => {
-      this.saveAddress();
-    });
+    if (this.isPost) {
+      this.personService.savePerson(this.personData).subscribe((result: PersonViewModel) => {
+        this.saveAddress(result.id);
+      });
+    } else {
+      this.personData.id = this.personId;
+      this.personService.editPerson(this.personData).subscribe((result: PersonViewModel) => {
+        this.editAddress();
+      });
+    }
+
   }
 
-  saveAddress(): void {
-    debugger
+  saveAddress(personId: number): void {
     const city = this.addressForm.get('city').value;
     this.addressData = new AddressViewModel(this.addressForm.value);
     this.addressData.cityId = city.id;
+    this.addressData.personId = personId;
     this.addressService.saveAddress(this.addressData).subscribe(result => {
+      if (result) {
+        this.dialogRef.close(true);
+      }
+    });
+  }
 
+  editAddress() {
+    const city = this.addressForm.get('city').value;
+    this.addressData = new AddressViewModel(this.addressForm.value);
+    this.addressData.cityId = city.id;
+    this.addressData.personId = this.personId;
+    this.addressData.id = this.addressId;
+    this.addressService.editAddress(this.addressData).subscribe(result => {
+      if (result) {
+        this.dialogRef.close(true);
+      }
+    });
+  }
+
+
+  getAddressByPersonId() {
+    this.addressService.getAddressByPersonId(this.personId).subscribe((result: any) => {
+      if (result) {
+        this.addressForm.get('street').setValue(result.street);
+        this.addressForm.get('number').setValue(result.number);
+        this.addressForm.get('cep').setValue(result.cep);
+        this.addressForm.get('state').setValue(result.city.state);
+        this.addressForm.get('city').setValue(result.city);
+        this.addressForm.get('neighborhood').setValue(result.neighborhood);
+        this.addressForm.get('complement').setValue(result.complement);
+        this.addressId = result.id;
+      }
     });
   }
 
@@ -150,9 +210,7 @@ export class ModalPersonComponent implements OnInit {
   }
 
   displayState(result) {
-    // if (result) {
     return result.name;
-    // }
   }
 
   displayFn(result) {
