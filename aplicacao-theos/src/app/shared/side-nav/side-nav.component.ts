@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, Input } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
@@ -13,8 +14,9 @@ export class SideNavComponent implements OnInit, OnDestroy {
   _mobileQueryListener: () => void;
   constructor(
     media: MediaMatcher,
-    changeDetectorRef: ChangeDetectorRef
-    ) {
+    changeDetectorRef: ChangeDetectorRef,
+    private router: Router
+  ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -26,6 +28,10 @@ export class SideNavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  logout() {
+    this.router.navigate(['account/login']);
   }
 
 }

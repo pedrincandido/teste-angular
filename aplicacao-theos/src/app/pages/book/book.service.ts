@@ -13,7 +13,7 @@ export class BookService {
   ) { }
 
   getAllBook(): Observable<BookViewModel> {
-    return this.http.get<BookViewModel>('api/book');
+    return this.http.get<BookViewModel>('api/authorbook');
   }
 
   postBook(data: BookViewModel) {
@@ -25,7 +25,7 @@ export class BookService {
     return this.http.delete<BookViewModel>(`api/book/${bookId}`);
   }
 
-  editBook(data: BookViewModel) {
-    return this.http.put<BookViewModel>(`api/book`, data);
+  editBook(data) {
+    return this.http.put(`api/book`, data);
   }
 }

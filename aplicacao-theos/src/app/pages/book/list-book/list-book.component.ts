@@ -57,8 +57,10 @@ export class ListBookComponent implements OnInit, OnDestroy {
 
 
   private loadBook(): void {
-    this.bookService.getAllBook().subscribe((result: BookViewModel) => {
-      this.books = result;
+    this.bookService.getAllBook().subscribe((result: any) => {
+      if (result) {
+        this.books = result;
+      }
     });
   }
 

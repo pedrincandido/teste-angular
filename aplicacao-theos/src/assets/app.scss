@@ -11,5 +11,5 @@ $ProvaTecnica-theme: mat-light-theme($ProvaTecnica-primary, $ProvaTecnica-accent
 @include angular-material-theme($ProvaTecnica-theme);
 
 @import "mixins/material-pallete";
+@import "loader/loader-theme.scss";
 @import "loader/loader-carregamento.scss";
-@import "loader/loader-theme.scss"

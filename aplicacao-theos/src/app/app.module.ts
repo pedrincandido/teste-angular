@@ -6,17 +6,20 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './shared/material.module';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { BroadcasterService } from './shared/services/broadcaster.service';
+import { LoaderComponent } from './shared/loader/loader.component';
+import { RequestInterceptorService } from './shared/services/request-interceptor.service';
 registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
     AppComponent,
-    SideNavComponent
+    SideNavComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +31,7 @@ registerLocaleData(localePt);
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true },
     BroadcasterService
   ],
   bootstrap: [AppComponent]

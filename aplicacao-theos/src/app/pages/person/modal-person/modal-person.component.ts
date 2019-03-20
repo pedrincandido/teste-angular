@@ -140,8 +140,10 @@ export class ModalPersonComponent implements OnInit {
           map(value => this._filterCity(value))
         );
     }
+    if (!this.isPost) {
+      this.getAddressByPersonId();
+    }
     this.continue = true;
-    this.getAddressByPersonId();
   }
 
   returnForm(): void {
@@ -220,7 +222,6 @@ export class ModalPersonComponent implements OnInit {
   }
 
   optionChange(event) {
-    // this.initFilter();
     this.filteredCity = [];
     this.addressForm.get('city').reset();
     this.selectState = event;

@@ -58,8 +58,7 @@ export class ModalRegisterComponent implements OnInit {
       .subscribe((result: any) => {
         this.personList = result;
       });
-
-    if (this.data.book) {
+    if (this.data) {
       this.initValues(this.data.book);
     }
   }
@@ -82,13 +81,13 @@ export class ModalRegisterComponent implements OnInit {
     });
   }
 
-  initValues(book: BookViewModel) {
-    this.bookForm.get('title').setValue(book.title);
-    this.bookForm.get('pages').setValue(book.pages);
-    this.bookForm.get('edition').setValue(book.edition);
-    this.bookForm.get('publishingCompany').setValue(book.publishingCompany);
-    this.bookForm.get('person').setValue(book.person);
-    this.bookForm.get('yearPublication').setValue(book.publishingCompany);
+  initValues(data) {
+    this.bookForm.get('title').setValue(data.book.title);
+    this.bookForm.get('pages').setValue(data.book.pages);
+    this.bookForm.get('edition').setValue(data.book.edition);
+    this.bookForm.get('publishingCompany').setValue(data.book.publishingCompany);
+    this.bookForm.get('person').setValue(data.person);
+    this.bookForm.get('yearPublication').setValue(data.year_publication);
   }
 
   addPerson() {

@@ -12,7 +12,8 @@ import { ModalRegisterComponent } from './modal-register/modal-register.componen
   styleUrls: ['./book.component.scss']
 })
 export class BookComponent implements OnInit {
-  @Input() book: BookViewModel;
+  book: BookViewModel;
+  @Input() authorBook: any;
   cardTitle: string;
   cardDescripton: string;
   cardAlt: string;
@@ -24,7 +25,7 @@ export class BookComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.cardDescripton = this.book.description;
+    this.book = new BookViewModel(this.authorBook.book);
     this.cardTitle = this.book.title;
     this.cardImagePath = this.book.url;
   }
@@ -45,12 +46,23 @@ export class BookComponent implements OnInit {
   openDialogEdit(): void {
     const dialogRef = this.dialog.open(ModalRegisterComponent, {
       width: '500px',
-      data: { book: this.book }
+      data: { book: this.authorBook }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.saveBook(result);
+        result.url = this.authorBook.book.url;
+        result.id = this.authorBook.book.id;
+        result.authorBookId = this.authorBook.id;
+        this.editBook(result);
+      }
+    });
+  }
+
+  private editBook(data): void {
+    this.bookService.editBook(data).subscribe(result => {
+      if (result) {
+        this.refreshBook();
       }
     });
   }
